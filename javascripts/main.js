@@ -49,10 +49,7 @@ function renderCalendar() {
                 "http://192.168.1.116/property/roomMeterNo/historyDegree",
               success: function(result) {
                 console.log("result", result);
-                // setTimeout(function (params) {
                 feeData = result
-
-                //模拟获取数据start
                 var resultObj = {};
                 if (layer) layer.close(index);
                 for (var i = 0; i < feeData.length; i++) {
@@ -74,7 +71,6 @@ function renderCalendar() {
                 myCalendar.addMark(resultObj);
               }
             });
-            // }, 500)
             return {}
         },
         timeupdate: false,//显示当前的时间HH:mm
