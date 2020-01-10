@@ -36,47 +36,45 @@ function renderCalendar() {
         markColor: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],//记事各个颜色
         main: function (year, month) {
             console.log(year + "--->" + month);
-
-            // alert("[获取数据]" + year + "--->" + month);
-            if (layer) index = layer.msg('正在查询数据......', { icon: 16, shade: 0.6 });
-            setTimeout(function (params) {
-                feeData = [
-                    { subject: "2020-01-01", type: '水表度数', value: 71.49 },
-                    { subject: "2020-01-01", type: '水表度数', value: 71.49 },
-                    { subject: "2020-01-02", type: '水表度数', value: 71.94 },
-                    { subject: "2020-01-13", type: '水表度数', value: 73.84 },
-                    { subject: "2020-01-15", type: '水表度数', value: 73.84 }
-                ];
+						if (layer) index = layer.msg('正在查询数据......', { icon: 16, shade: 0.6 });
+						var params = {
+							id: 23,
+							time: month < 10 ? year + '-' + '0' + month : year + '-' + month
+						}
+						$.ajax({
+              data: params,
+              dataType: "json",
+              type: "get",
+              url:
+                "http://192.168.1.116/property/roomMeterNo/historyDegree",
+              success: function(result) {
+                console.log("result", result);
+                // setTimeout(function (params) {
+                feeData = result
 
                 //模拟获取数据start
-                var resultObj = {}
-
-                console.log('feeData', feeData)
-                // setTimeout(()=>{
-                //     console.log('myCalendar', myCalendar)
-                // }, 2000)
+                var resultObj = {};
                 if (layer) layer.close(index);
-                console.log('myCalendar', myCalendar)
-                console.log('resultObj', resultObj)
-
                 for (var i = 0; i < feeData.length; i++) {
-                    var data = feeData[i]
-                    var dateArr = data.subject.split('-')
-                    var month = data.subject.split('-')[1]
-                    month = Number(month) < 10 ? month.replace('0', '') : month
-                    dateArr[1] = month
-                    var key = dateArr.join('-')
-                    resultObj[key] = resultObj[key] || []
-                    resultObj[key].push({
-                        title: resultObj[key].length > 0 ? '' : '水表度数',
-                        name: data.value,
-                        ratio: '',
-                        status: '',
-                        statusText: ''
-                    })
+                  var data = feeData[i];
+                  var dateArr = data.subject.split("-");
+                  var month = data.subject.split("-")[1];
+                  month = Number(month) < 10 ? month.replace("0", "") : month;
+                  dateArr[1] = month;
+                  var key = dateArr.join("-");
+                  resultObj[key] = resultObj[key] || [];
+                  resultObj[key].push({
+                    title: resultObj[key].length > 0 ? "" : "水表度数",
+                    name: data.value,
+                    ratio: "",
+                    status: "",
+                    statusText: ""
+                  });
                 }
-                myCalendar.addMark(resultObj)
-            }, 500)
+                myCalendar.addMark(resultObj);
+              }
+            });
+            // }, 500)
             return {}
         },
         timeupdate: false,//显示当前的时间HH:mm
@@ -98,20 +96,6 @@ function renderCalendar() {
     });
 }
 
-// $.ajax({
-//   data: params,
-//   dataType: "json",
-//   type: "get",
-//   url: "http://192.168.1.116/property/roomMeterNo/historyDegree?id=23&start=2020-01-01&end=2020-01-08",
-//   success: function(result) {
-//     console.log('success')
-//     // if (result.success == true) {
-//     //   console.log('success')
-//     // } else {
-//     //   console.log("success");
 
-//     // }
-//   }
-// });
 
 renderCalendar();
