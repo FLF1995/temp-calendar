@@ -61,7 +61,7 @@ function renderCalendar() {
                   var key = dateArr.join("-");
                   resultObj[key] = resultObj[key] || [];
                   resultObj[key].push({
-                    title: resultObj[key].length > 0 ? "" : "水表度数",
+                    title: resultObj[key].length > 0 ? "" : data.type,
                     name: data.value,
                     ratio: "",
                     status: "",

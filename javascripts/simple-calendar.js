@@ -546,15 +546,15 @@ var SimpleCalendar = function () {
                 $("#sc-mark-sp").html("");
 
                 //@-拼接数据：
-                var data = options.mark;
+								var data = options.mark;
                 if (data) {
                     daysElement.forEach(function (v, i) {
                         var day = +v.querySelector('.day').innerHTML;
                         if (day == 1) currentmonth++;
-                        if (currentmonth != month) return;
+												if (currentmonth != month) return;
                         var val = data[year + '-' + currentmonth + '-' + (day < 10 ? '0' + day : day)];
                         if (typeof (val) == 'object') {
-                            v.classList.add('sc-mark');
+														v.classList.add('sc-mark');
                             for (var i in val) {
                                 _addMask(v, val[i], val[i].status, val[i].statusText);
                             }
@@ -728,6 +728,7 @@ var SimpleCalendar = function () {
 						var thisMonth = new Date().getMonth() + 1;
 						
             yearadd.onclick = function () {
+							selectMonth.value = 1;
 							if (thisYear != currentyear) {
                 // var currentyear = selectYear.value;
                 if (currentyear < endYear) currentyear++;
@@ -737,10 +738,11 @@ var SimpleCalendar = function () {
               }
             };
             yearsub.onclick = function () {
+								selectMonth.value = 1;
                 // var currentyear = selectYear.value;
                 if (currentyear > startYear) currentyear--;
                 else return;//@-禁用范围外的数据
-                selectYear.value = currentyear;
+								selectYear.value = currentyear;
                 calendar.update(this.tmonth, currentyear);
 						};
 						
