@@ -552,7 +552,9 @@ var SimpleCalendar = function () {
                         var day = +v.querySelector('.day').innerHTML;
                         if (day == 1) currentmonth++;
 												if (currentmonth != month) return;
-                        var val = data[year + '-' + currentmonth + '-' + (day < 10 ? '0' + day : day)];
+												var key = year + '-' + currentmonth + '-' + (day < 10 ? '0' + day : day)
+												console.log('key',key)
+												var val = data[year + '-' + currentmonth + '-' + (day < 10 ? '0' + day : day)];
                         if (typeof (val) == 'object') {
 														v.classList.add('sc-mark');
                             for (var i in val) {
